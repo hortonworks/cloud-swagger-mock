@@ -15,7 +15,7 @@ var options = {
 };
 
 var configurationendpoints = {
-  "/setup" : {
+  [program.shift + "/setup"] : {
     "post" : {
       "operationId" : "setUp",
       "schemes" : [ "http", "https" ],
@@ -39,7 +39,7 @@ var configurationendpoints = {
       }
     }
   },
-  "/trace" : {
+  [program.shift + "/trace"] : {
     "post" : {
       "operationId" : "getTrace",
       "schemes" : [ "http", "https" ],
