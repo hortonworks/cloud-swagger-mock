@@ -107,9 +107,9 @@ swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
   app.use(middleware.swaggerMetadata());
 
   app.use(function custom(req, res, next) {
-    if (req.swagger.apiPath === '/trace' ) {
+    if (req.swagger.apiPath === program.shift +'/trace' ) {
       res = respond(res, jsontype, 200, JSON.stringify(requesttraces));
-    } else if (req.swagger.apiPath === '/setup') {
+    } else if (req.swagger.apiPath === program.shift + '/setup') {
       responses[req.swagger.params.body.value.operationid] = {
         "responses":req.swagger.params.body.value.responses,
       }
