@@ -105,7 +105,7 @@ var resetTrace = function() {
 
 var resetResponses = function() {
   global.responses = require('./responses/responses.js').responses;
-)
+}
 
 resetTrace();
 resetResponses();
