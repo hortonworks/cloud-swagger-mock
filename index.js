@@ -66,7 +66,7 @@ var configurationendpoints = {
     }
   },
   [program.setupPath + "/tracereset"] : {
-    "post" : {
+    "delete" : {
       "operationId" : "resetTrace",
       "schemes" : [ "http", "https" ],
       "consumes" : [ "application/json" ],
