@@ -49,8 +49,25 @@ var configurationendpoints = {
     }
   },
   [program.setupPath + "/trace"] : {
-    "post" : {
+    "get" : {
       "operationId" : "getTrace",
+      "schemes" : [ "http", "https" ],
+      "consumes" : [ "application/json" ],
+      "produces" : [ "application/json" ],
+      "parameters" : [],
+      "responses" : {
+        "200" : {
+          "description" : "successful operation",
+          "schema" : {
+            "type" : "object"
+          }
+        }
+      }
+    }
+  },
+  [program.setupPath + "/tracereset"] : {
+    "post" : {
+      "operationId" : "resetTrace",
       "schemes" : [ "http", "https" ],
       "consumes" : [ "application/json" ],
       "produces" : [ "application/json" ],
