@@ -65,20 +65,13 @@ var configurationendpoints = {
       }
     }
   },
-  [program.setupPath + "/tracereset"] : {
+  [program.setupPath + "/resettrace"] : {
     "post" : {
       "operationId" : "resetTrace",
       "schemes" : [ "http", "https" ],
       "consumes" : [ "application/json" ],
       "produces" : [ "application/json" ],
-      "parameters" : [{
-        "in" : "body",
-        "name" : "body",
-        "required" : false,
-        "schema" : {
-          "type" : "object"
-        }
-      }],
+      "parameters" : [],
       "responses" : {
         "200" : {
           "description" : "successful operation",
@@ -147,8 +140,9 @@ swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
         "responses":req.swagger.params.body.value.responses,
       }
       res = respond(res, jsontype, 200 );
-    } else if (req.swagger.apiPath === program.setupPath + '/tracereset') {
+    } else if (req.swagger.apiPath === program.setupPath + '/resettrace') {
       resetTrace();
+      res = respond(res, jsontype, 200 );
     } else {
       console.log('service call: ', req.originalUrl);
       requesttraces.push({"url": req.originalUrl, "params": req.swagger.params});
