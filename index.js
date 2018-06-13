@@ -20,10 +20,11 @@ program
   .option('-b, --basePath <value>', 'basePath to change in swagger', '/')
   .option('-s, --shift <value>', 'all path will be starts with this path', '/cb/api')
   .option('-p, --paths <item>', 'list of swagger paths', '{}' )
+  .option('-u, --setupPath <value>', 'all maintanance endpoint will start with this path', '/cb/api/')
   .parse(process.argv);
 
 var configurationendpoints = {
-  [program.shift + "/setup"] : {
+  [program.setupPath + "/setup"] : {
     "post" : {
       "operationId" : "setUp",
       "schemes" : [ "http", "https" ],
@@ -47,7 +48,7 @@ var configurationendpoints = {
       }
     }
   },
-  [program.shift + "/trace"] : {
+  [program.setupPath + "/trace"] : {
     "post" : {
       "operationId" : "getTrace",
       "schemes" : [ "http", "https" ],
@@ -87,9 +88,6 @@ repl = addendpoints(JSON.parse(program.paths), repl, '');
 
 swaggerDoc.paths=repl;
 
-global.requesttraces = [];
-global.responses = require('./responses/responses.js').responses;
-
 var respond = function(res, contenttype, statuscode, content) {
   res.setHeader('Content-Type', contenttype);
   res.statusCode = statuscode;
@@ -101,19 +99,32 @@ var respond = function(res, contenttype, statuscode, content) {
   return res;
 }
 
+var resetTrace = function() {
+  global.requesttraces = [];
+}
+
+var resetResponses = function() {
+  global.responses = require('./responses/responses.js').responses;
+)
+
+resetTrace();
+resetResponses();
+
 // Initialize the Swagger middleware
 swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
   // Interpret Swagger resources and attach metadata to request - must be first in swagger-tools middleware chain
   app.use(middleware.swaggerMetadata());
 
   app.use(function custom(req, res, next) {
-    if (req.swagger.apiPath === program.shift +'/trace' ) {
+    if (req.swagger.apiPath === program.setupPath +'/trace' ) {
       res = respond(res, jsontype, 200, JSON.stringify(requesttraces));
-    } else if (req.swagger.apiPath === program.shift + '/setup') {
+    } else if (req.swagger.apiPath === program.setupPath + '/setup') {
       responses[req.swagger.params.body.value.operationid] = {
         "responses":req.swagger.params.body.value.responses,
       }
       res = respond(res, jsontype, 200 );
+    } else if (req.swagger.apiPath === program.setupPath + '/tracereset') {
+      resetTrace();
     } else {
       console.log('service call: ', req.originalUrl);
       requesttraces.push({"url": req.originalUrl, "params": req.swagger.params});
