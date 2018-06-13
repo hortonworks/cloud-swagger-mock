@@ -20,7 +20,7 @@ program
   .option('-b, --basePath <value>', 'basePath to change in swagger', '/')
   .option('-s, --shift <value>', 'all path will be starts with this path', '/cb/api')
   .option('-p, --paths <item>', 'list of swagger paths', '{}' )
-  .option('-u, --setupPath <value>', 'all maintanance endpoint will start with this path', '/cb/api/')
+  .option('-u, --setupPath <value>', 'all maintanance endpoint will start with this path', '/cb/api')
   .parse(process.argv);
 
 var configurationendpoints = {
