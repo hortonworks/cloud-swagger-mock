@@ -111,7 +111,7 @@ swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
       res = respond(res, jsontype, 200, JSON.stringify(requesttraces));
     } else if (req.swagger.apiPath === program.shift + '/setup') {
       responses[req.swagger.params.body.value.operationid] = {
-        "responses":req.swagger.params.body.value.responses,
+        "responses":JSON.parse(req.swagger.params.body.value.responses),
       }
       res = respond(res, jsontype, 200 );
     } else {
