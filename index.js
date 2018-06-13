@@ -66,12 +66,19 @@ var configurationendpoints = {
     }
   },
   [program.setupPath + "/tracereset"] : {
-    "delete" : {
+    "post" : {
       "operationId" : "resetTrace",
       "schemes" : [ "http", "https" ],
       "consumes" : [ "application/json" ],
       "produces" : [ "application/json" ],
-      "parameters" : [],
+      "parameters" : [{
+        "in" : "body",
+        "name" : "body",
+        "required" : false,
+        "schema" : {
+          "type" : "object"
+        }
+      }],
       "responses" : {
         "200" : {
           "description" : "successful operation",
