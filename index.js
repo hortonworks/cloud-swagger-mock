@@ -138,7 +138,7 @@ var resetTrace = function() {
 }
 
 var resetResponses = function() {
-  global.responses = require('./responses/responses.js').responses;
+  global.responses = _.cloneDeep(require('./responses/responses.js').responses);
 }
 
 resetTrace();
