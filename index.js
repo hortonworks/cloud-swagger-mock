@@ -81,6 +81,23 @@ var configurationendpoints = {
         }
       }
     }
+  },
+  [program.setupPath + "/reset"] : {
+    "post" : {
+      "operationId" : "reset",
+      "schemes" : [ "http", "https" ],
+      "consumes" : [ "application/json" ],
+      "produces" : [ "application/json" ],
+      "parameters" : [],
+      "responses" : {
+        "200" : {
+          "description" : "successful operation",
+          "schema" : {
+            "type" : "object"
+          }
+        }
+      }
+    }
   }
 };
 
