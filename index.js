@@ -8,6 +8,7 @@ var fs = require('fs');
 var serverPort = 8080;
 var program = require('commander');
 var jsontype = 'application/json';
+var _ = require('lodash');
 
 // swaggerRouter configuration
 var options = {
