@@ -143,6 +143,9 @@ swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
     } else if (req.swagger.apiPath === program.setupPath + '/resettrace') {
       resetTrace();
       res = respond(res, jsontype, 200 );
+    } else if (req.swagger.apiPath === program.setupPath + '/reset') {
+      resetResponses();
+      res = respond(res, jsontype, 200 );
     } else {
       console.log('service call: ', req.originalUrl);
       requesttraces.push({"url": req.originalUrl, "params": req.swagger.params});
