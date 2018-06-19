@@ -81,6 +81,23 @@ var configurationendpoints = {
         }
       }
     }
+  },
+  [program.setupPath + "/reset"] : {
+    "post" : {
+      "operationId" : "reset",
+      "schemes" : [ "http", "https" ],
+      "consumes" : [ "application/json" ],
+      "produces" : [ "application/json" ],
+      "parameters" : [],
+      "responses" : {
+        "200" : {
+          "description" : "successful operation",
+          "schema" : {
+            "type" : "object"
+          }
+        }
+      }
+    }
   }
 };
 
@@ -142,6 +159,9 @@ swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
       res = respond(res, jsontype, 200 );
     } else if (req.swagger.apiPath === program.setupPath + '/resettrace') {
       resetTrace();
+      res = respond(res, jsontype, 200 );
+    } else if (req.swagger.apiPath === program.setupPath + '/reset') {
+      resetResponses();
       res = respond(res, jsontype, 200 );
     } else {
       console.log('service call: ', req.originalUrl);
