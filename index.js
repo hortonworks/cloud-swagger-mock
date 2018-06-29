@@ -203,7 +203,7 @@ swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
     }
     setTimeout(function () {
       next();
-    } _.get(responses[req.swagger.operation.operationId], 'delayTime', 0)), 
+    }, _.get(responses[req.swagger.operation.operationId], 'delayTime', 0)), 
   })
 
   // Serve the Swagger documents and Swagger UI
