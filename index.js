@@ -173,37 +173,37 @@ swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
         console.log('potential responses for the request: ', JSON.stringify(response));
       }
       if (typeof response !== 'undefined') {
-         console.log('there is  at least one response');
-         response.every(function(element) {
-           setTimeout(function () {
-             console.log('checking element', element);
-             if (typeof element.condition === 'undefined' || element.condition === '') {
-               console.log('response without condition');
-               res = respond(res, jsontype, element.statusCode, JSON.stringify(element.response));
-               return true;
-             } else {
-               console.log('more responses', element.condition);
-               var isthistheresponse = false;
-               try {
-                 var f = new Function('params', element.condition);
-                 isthistheresponse = f(req.swagger.params);
-                 console.log('check: ', isthistheresponse, " - " , req.swagger.params['name']);
-               } catch (err) {
-                 console.log("Err: " + err);
-               }
-               if (isthistheresponse) {
-                 res = respond(res, jsontype, element.statusCode, JSON.stringify(element.response));
-                 return false;
-               }
-             }
+       console.log('there is  at least one response');
+       response.every(function(element) {
+           console.log('checking element', element);
+           if (typeof element.condition === 'undefined' || element.condition === '') {
+             console.log('response without condition');
+             res = respond(res, jsontype, element.statusCode, JSON.stringify(element.response));
              return true;
-           }, element.delayTime);
-         });
+           } else {
+             console.log('more responses', element.condition);
+             var isthistheresponse = false;
+             try {
+               var f = new Function('params', element.condition);
+               isthistheresponse = f(req.swagger.params);
+               console.log('check: ', isthistheresponse, " - " , req.swagger.params['name']);
+             } catch (err) {
+               console.log("Err: " + err);
+             }
+             if (isthistheresponse) {
+               res = respond(res, jsontype, element.statusCode, JSON.stringify(element.response));
+               return false;
+             }
+           }
+           return true;
+       });
       } else {
          res = respond(res, jsontype, 200 );
       }
     }
-    next();
+    setTimeout(function () {
+      next();
+    } _.get(responses[req.swagger.operation.operationId], 'delayTime', 0)), 
   })
 
   // Serve the Swagger documents and Swagger UI
