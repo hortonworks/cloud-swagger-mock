@@ -175,27 +175,29 @@ swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
       if (typeof response !== 'undefined') {
          console.log('there is  at least one response');
          response.every(function(element) {
-           console.log('checking element', element);
-           if (typeof element.condition === 'undefined' || element.condition === '') {
-             console.log('response without condition');
-             res = respond(res, jsontype, element.statusCode, JSON.stringify(element.response));
-             return true;
-           } else {
-             console.log('more responses', element.condition);
-             var isthistheresponse = false;
-             try {
-               var f = new Function('params', element.condition);
-               isthistheresponse = f(req.swagger.params);
-               console.log('check: ', isthistheresponse, " - " , req.swagger.params['name']);
-             } catch (err) {
-               console.log("Err: " + err);
-             }
-             if (isthistheresponse) {
+           setTimeout(function () {
+             console.log('checking element', element);
+             if (typeof element.condition === 'undefined' || element.condition === '') {
+               console.log('response without condition');
                res = respond(res, jsontype, element.statusCode, JSON.stringify(element.response));
-               return false;
+               return true;
+             } else {
+               console.log('more responses', element.condition);
+               var isthistheresponse = false;
+               try {
+                 var f = new Function('params', element.condition);
+                 isthistheresponse = f(req.swagger.params);
+                 console.log('check: ', isthistheresponse, " - " , req.swagger.params['name']);
+               } catch (err) {
+                 console.log("Err: " + err);
+               }
+               if (isthistheresponse) {
+                 res = respond(res, jsontype, element.statusCode, JSON.stringify(element.response));
+                 return false;
+               }
              }
-           }
-           return true;
+             return true;
+           }, element.delayTime);
          });
       } else {
          res = respond(res, jsontype, 200 );
