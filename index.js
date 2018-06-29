@@ -201,9 +201,7 @@ swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
          res = respond(res, jsontype, 200 );
       }
     }
-    setTimeout(function () {
-      next();
-    }, _.get(responses[req.swagger.operation.operationId], 'delayTime', 0));
+    next();
   })
 
   // Serve the Swagger documents and Swagger UI
