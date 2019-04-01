@@ -19,9 +19,9 @@ program
   .version('0.0.1')
   .option('-j, --json <value>', 'path to swagger json', './api/swagger.json')
   .option('-b, --basePath <value>', 'basePath to change in swagger', '/')
-  .option('-s, --shift <value>', 'all path will be starts with this path', '/cloudbreak')
+  .option('-s, --shift <value>', 'all path will be starts with this path', '/cb/api')
   .option('-p, --paths <item>', 'list of swagger paths', '{}' )
-  .option('-u, --setupPath <value>', 'all maintanance endpoint will start with this path', '/cloudbreak')
+  .option('-u, --setupPath <value>', 'all maintanance endpoint will start with this path', '/cb/api')
   .parse(process.argv);
 
 var configurationendpoints = {
